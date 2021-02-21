@@ -19,7 +19,7 @@ import {
   TableBody,
 } from "@material-ui/core";
 import { Scatter } from "react-chartjs-2";
-import { getIrisTrainData, apiPredUrl } from "../lib/irisApi";
+import { getIrisTrainData, apiPredUrl, apinUrl } from "../lib/irisApi";
 import { READ_IRIS, IRIS_DATA, POST_IRIS, PRED_IRIS, PRED } from "../lib/type";
 import Layout from "../components/Layout";
 
@@ -102,6 +102,11 @@ export default function Iris({ iris }: Props) {
     setPredPeVersicolor([...predPeVersicolor, pe_versicolor]);
     setPredPeVirginica([...predPeVirginica, pe_virginica]);
     setPredData([...predData, pred]);
+  };
+
+  // 学習する
+  const train = async () => {
+    const res = await axios.post(apinUrl);
   };
 
   // 予測結果の表示
@@ -384,6 +389,15 @@ export default function Iris({ iris }: Props) {
               予測する
             </Button>
           </form>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              train();
+            }}
+          >
+            学習する
+          </Button>
         </Grid>
 
         <Grid item xs={12} md={6} xl={3}>
@@ -412,41 +426,21 @@ export default function Iris({ iris }: Props) {
                 <TableBody>
                   {predData.map((data, rowIndex) => (
                     <TableRow hover key={rowIndex}>
-                      <TableCell
-                        align="center"
-                        // className={styles.tasklist__hover}
-                        key={`${rowIndex}1`}
-                      >
+                      <TableCell align="center" key={`${rowIndex}1`}>
                         <span>{data.sepal_length}</span>
                       </TableCell>
 
-                      <TableCell
-                        align="center"
-                        // className={styles.tasklist__hover}
-                        key={`${rowIndex}2`}
-                      >
+                      <TableCell align="center" key={`${rowIndex}2`}>
                         <span>{data.sepal_width}</span>
                       </TableCell>
 
-                      <TableCell
-                        align="center"
-                        // className={styles.tasklist__hover}
-                        key={`${rowIndex}3`}
-                      >
+                      <TableCell align="center" key={`${rowIndex}3`}>
                         <span>{data.petal_length}</span>
                       </TableCell>
-                      <TableCell
-                        align="center"
-                        // className={styles.tasklist__hover}
-                        key={`${rowIndex}4`}
-                      >
+                      <TableCell align="center" key={`${rowIndex}4`}>
                         <span>{data.petal_width}</span>
                       </TableCell>
-                      <TableCell
-                        align="center"
-                        // className={styles.tasklist__hover}
-                        key={`${rowIndex}5`}
-                      >
+                      <TableCell align="center" key={`${rowIndex}5`}>
                         <span>{pred_display(data.pred)}</span>
                       </TableCell>
                     </TableRow>
