@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     tableLayout: "fixed",
     minWidth: 350,
   },
+  button: {
+    margin: "12px",
+  },
 }));
 
 interface Props {
@@ -281,16 +284,16 @@ export default function Iris({ iris }: Props) {
   return (
     <Layout title="IRIS dataset">
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={12} md={6} xl={3}>
+        <Grid item xs={12} md={6} xl={6}>
           <Scatter data={sepal_data} options={sepal_options} />
         </Grid>
-        <Grid item xs={12} md={6} xl={3}>
+        <Grid item xs={12} md={6} xl={6}>
           <Scatter data={petal_data} options={petal_options} />
         </Grid>
         <Grid item md={1} xl={1}>
           <></>
         </Grid>
-        <Grid item xs={12} md={5} xl={2}>
+        <Grid item xs={12} md={5} xl={5}>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -385,22 +388,28 @@ export default function Iris({ iris }: Props) {
                 }}
               />
             </FormControl>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              className={classes.button}
+              type="submit"
+              variant="contained"
+              color="primary"
+            >
               予測する
             </Button>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                train();
+              }}
+            >
+              学習する
+            </Button>
           </form>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              train();
-            }}
-          >
-            学習する
-          </Button>
         </Grid>
 
-        <Grid item xs={12} md={6} xl={3}>
+        <Grid item xs={12} md={6} xl={6}>
           {predData && (
             <TableContainer>
               <Table stickyHeader size="small" className={classes.table}>
